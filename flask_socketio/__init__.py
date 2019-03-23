@@ -218,10 +218,12 @@ class SocketIO(object):
                         'Flask-SocketIO is Running under Werkzeug, WebSocket '
                         'is not available.')
                 self.server_options['async_mode'] = 'threading'
+        # 创建 socketio.Server 实例
         self.server = socketio.Server(**self.server_options)
-        self.async_mode = self.server.async_mode
+        self.async_mode = self.server.async_mode    # 异步模式
         for handler in self.handlers:
             self.server.on(handler[0], handler[1], namespace=handler[2])
+        # 循环注册 namespace 处理函数到 self.server
         for namespace_handler in self.namespace_handlers:
             self.server.register_namespace(namespace_handler)
 
